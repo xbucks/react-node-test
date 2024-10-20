@@ -16,7 +16,7 @@ import { Controller, UseFormReturn } from 'react-hook-form';
 
 import { StudentFilter } from '../../types';
 import { useGetClassesQuery } from '@/domains/class/api';
-
+import { useGetSectionsQuery } from '@/domains/section/api';
 type FilterStudentProps = {
   methods: UseFormReturn<StudentFilter>;
   searchStudent: () => void;
@@ -24,19 +24,22 @@ type FilterStudentProps = {
 
 export const FilterStudent: React.FC<FilterStudentProps> = ({ methods, searchStudent }) => {
   const { data: classResult } = useGetClassesQuery();
-  const [sections, setSections] = React.useState<string[]>([]);
+  const { data: sectionsResult } = useGetSectionsQuery();
+  // const [sections, setSections] = React.useState<string[]>([]);
 
   const { control, register } = methods;
 
-  const handleClassChange = (selectedClass: number | string) => {
-    const classes = classResult?.classes || [];
-    const selectedSections = classes.find((cl) => cl.id === Number(selectedClass));
-    if (selectedSections) {
-      setSections(selectedSections.sections.length > 0 ? selectedSections.sections.split(',') : []);
-    } else {
-      setSections([]);
-    }
-  };
+
+  // const handleClassChange = (selectedClass: number | string) => {
+  //   const classes = classResult?.classes || [];
+  //   const sections = sectionsResult?.sections || [];
+  //   // const selectedSections = classes.find((cl) => cl.id === Number(selectedClass));
+  //   if (sections) {
+  //     setSections(sections?.length > 0 ? sections.name : []);
+  //   } else {
+  //     setSections([]);
+  //   }
+  // };
 
   return (
     <Box component={Paper} sx={{ p: 2 }}>
@@ -58,11 +61,11 @@ export const FilterStudent: React.FC<FilterStudentProps> = ({ methods, searchStu
                   onChange={(event) => {
                     const selectedClass = event.target.value;
                     onChange(selectedClass);
-                    handleClassChange(selectedClass);
+                    // handleClassChange(selectedClass);
                   }}
                 >
                   {classResult?.classes?.map((c) => (
-                    <MenuItem key={c.id} value={c.id.toString()}>
+                    <MenuItem key={c.id} value={c.name}>
                       {c.name}
                     </MenuItem>
                   ))}
@@ -85,9 +88,9 @@ export const FilterStudent: React.FC<FilterStudentProps> = ({ methods, searchStu
                   onChange={onChange}
                   size='small'
                 >
-                  {sections.map((s) => (
-                    <MenuItem key={s} value={s}>
-                      {s}
+                  {sectionsResult?.sections.map((s) => (
+                    <MenuItem key={s.id} value={s.name}>
+                      {s.name}
                     </MenuItem>
                   ))}
                 </Select>
@@ -106,7 +109,10 @@ export const FilterStudent: React.FC<FilterStudentProps> = ({ methods, searchStu
         </Grid2>
         <Grid2 size={{ xs: 8, md: 3 }}>
           <TextField
-            {...register('roll')}
+          {...register('roll',{
+            valueAsNumber: true, // Tự động chuyển giá trị thành số
+            setValueAs: (v) => (v === '' ? undefined : Number(v)), // Đảm bảo chuyển thành số
+          })}
             label='Roll'
             fullWidth
             size='small'

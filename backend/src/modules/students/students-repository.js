@@ -5,7 +5,7 @@ const getRoleId = async (roleName) => {
     const queryParams = [roleName];
     const { rows } = await processDBRequest({ query, queryParams });
     return rows[0].id;
-}
+};
 
 const findAllStudents = async (payload) => {
     const { name, className, section, roll } = payload;
@@ -37,18 +37,18 @@ const findAllStudents = async (payload) => {
         queryParams.push(roll);
     }
 
-    query += ' ORDER BY t1.id';
+    query += " ORDER BY t1.id";
 
     const { rows } = await processDBRequest({ query, queryParams });
     return rows;
-}
+};
 
 const addOrUpdateStudent = async (payload) => {
     const query = "SELECT * FROM student_add_update($1)";
     const queryParams = [payload];
     const { rows } = await processDBRequest({ query, queryParams });
     return rows[0];
-}
+};
 
 const findStudentDetail = async (id) => {
     const query = `
@@ -81,9 +81,9 @@ const findStudentDetail = async (id) => {
     const queryParams = [id];
     const { rows } = await processDBRequest({ query, queryParams });
     return rows[0];
-}
+};
 
-const findStudentToSetStatus = async ({ userId, reviewerId, status }) => {
+const findStudentToSetStatus = async ({ studentId, reviewerId, status }) => {
     const now = new Date();
     const query = `
         UPDATE users
@@ -93,10 +93,10 @@ const findStudentToSetStatus = async ({ userId, reviewerId, status }) => {
             status_last_reviewer_id = $3
         WHERE id = $4
     `;
-    const queryParams = [status, now, reviewerId, userId];
+    const queryParams = [status, now, reviewerId, studentId];
     const { rowCount } = await processDBRequest({ query, queryParams });
-    return rowCount
-}
+    return rowCount;
+};
 
 const findStudentToUpdate = async (paylaod) => {
     const { basicDetails: { name, email }, id } = paylaod;
@@ -109,7 +109,7 @@ const findStudentToUpdate = async (paylaod) => {
     const queryParams = [name, email, currentDate, id];
     const { rows } = await processDBRequest({ query, queryParams });
     return rows;
-}
+};
 
 module.exports = {
     getRoleId,

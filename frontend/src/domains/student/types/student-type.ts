@@ -21,12 +21,13 @@ export type Student = {
   lastLogin: Date;
 };
 
+
 export type StudentFilterState = {
   classes: ClassPropsWithId[];
   class: string;
   section: string;
   name: string;
-  roll: string;
+  roll:  number;
 };
 
 export type StudentFilterActions =

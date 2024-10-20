@@ -18,7 +18,7 @@ const initialState = {
   class: '',
   section: '',
   name: '',
-  roll: ''
+  roll: 0
 };
 
 export const ListStudents: React.FC = () => {
@@ -33,7 +33,7 @@ export const ListStudents: React.FC = () => {
   const searchStudent = (payload: StudentFilter) => {
     setFilter(payload);
   };
-
+console.log( data?.students)
   return (
     <>
       <Box sx={{ display: 'flex', mb: 1 }}>

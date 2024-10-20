@@ -4,7 +4,7 @@ export const StudentFilterSchema = z.object({
   class: z.string().optional(),
   section: z.string().optional(),
   name: z.string().optional(),
-  roll: z.string().optional()
+  roll:z.number().optional() 
 });
 
 export const BasicInfoSchema = z.object({
@@ -18,7 +18,7 @@ export const BasicInfoSchema = z.object({
 export const AcademicInfoSchema = z.object({
   class: z.string().min(1, 'Class is required'),
   section: z.string(),
-  roll: z.string().min(1, 'Roll is required'),
+  roll: z.number(),
   admissionDate: z.union([z.date(), z.string()])
 });
 

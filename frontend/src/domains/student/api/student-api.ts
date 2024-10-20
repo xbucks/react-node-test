@@ -16,6 +16,7 @@ export const studentApi = api.injectEndpoints({
     getStudents: builder.query<StudentData, StudentFilter>({
       query: (payload) => {
         const queryString = getQueryString(payload);
+        console.log('payload',payload)
         return `/students${queryString}`;
       },
       providesTags: (result) =>

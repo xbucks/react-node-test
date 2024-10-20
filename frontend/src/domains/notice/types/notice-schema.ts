@@ -8,6 +8,7 @@ export const NameValueSchema = z.object({
 export const RecipientDetailSchema = z.object({
   id: z.number(),
   name: z.string(),
+  description:z.string(),
   roleId: z.number(),
   primaryDependents: z.object({
     name: z.string(),
@@ -18,7 +19,7 @@ export const RecipientDetailSchema = z.object({
 export const NoticeFormSchema = z
   .object({
     title: z.string().min(1, 'Title is required'),
-    description: z.string().min(1, 'Description is required'),
+    description: z.string(),
     status: z.number().min(1, 'Status is required'),
     recipientType: z.enum(['EV', 'SP']),
     recipientRole: z.number().optional(),

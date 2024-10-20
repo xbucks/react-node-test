@@ -96,11 +96,15 @@ export const AcademicInformation = () => {
         </FormControl>
         <Box>
           <TextField
-            {...register('roll')}
+            {...register('roll',{
+              valueAsNumber: true, // Tự động chuyển giá trị thành số
+              setValueAs: (v) => (v === '' ? undefined : Number(v)), // Đảm bảo chuyển thành số
+            })}
             error={Boolean(errors.roll)}
             helperText={errors.roll?.message}
             label='Roll'
             size='small'
+         
             slotProps={{ inputLabel: { shrink: true } }}
           />
         </Box>
